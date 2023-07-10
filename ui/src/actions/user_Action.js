@@ -46,7 +46,7 @@ export const startLoginUser = (formLogin, props, setIsLogin) => {
                 } else {
                     localStorage.setItem('token', res.data.token)
                     props.history.push('/DashBoard')
-                    setIsLogin(true)
+                     setIsLogin(true)
                     Swal.fire({
                         position: 'center',
                         icon: 'success',

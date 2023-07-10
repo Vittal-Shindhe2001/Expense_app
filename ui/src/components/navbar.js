@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link, Route } from "react-router-dom/cjs/react-router-dom.min"
+import { Link, Route, withRouter } from "react-router-dom/cjs/react-router-dom.min"
 import Home from "./Home"
 import DashBoard from "./DashBoard"
 import Register from "./register"
@@ -7,6 +7,7 @@ import Login from "./login"
 import Setting from "./Settings"
 import Account from "./Account"
 import PageNotFound from "./PageNotFound"
+import PrivateRoute from "./helper_Function/PrivateRoute"
 const Navbar = (props) => {
     const [isLogin, setIsLogin] = useState(false)
     useEffect(() => {
@@ -68,7 +69,7 @@ const Navbar = (props) => {
                         </ul>
                     </div>
                 </nav>}
-                {!isLogin && <>
+            {/* {!isLogin && <>
             <Route path="/" component={Home} exact={true} />
             <Route path="/register" component={Register} />
                 <Route
@@ -87,8 +88,17 @@ const Navbar = (props) => {
                     <Route path="*" component={PageNotFound}/>       
                           
                 </>
-            )}
+            )} */}
+            <Route path='/' component={Home} exact={true} />
+            <Route path="/register" component={Register} />
+            <Route path="/login"
+                render={(props) => (
+                    <Login {...props} setIsLogin={setIsLogin} />
+                )} />
+            <PrivateRoute path="/dashBoard" component={DashBoard} />
+            <PrivateRoute path="/setting" component={Setting} />
+            <PrivateRoute path="/account" component={Account} />
         </div>
     )
 }
-export default Navbar
+export default withRouter(Navbar)

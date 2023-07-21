@@ -17,15 +17,15 @@ export const startPostUsers = (formSubmit, props) => {
                         timer: 3000,
                         timerProgressBar: true,
                         didOpen: (toast) => {
-                          toast.addEventListener('mouseenter', Swal.stopTimer)
-                          toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
                         }
-                      })
-                      
-                      Toast.fire({
+                    })
+
+                    Toast.fire({
                         icon: 'success',
                         title: 'Signed in successfully'
-                      })
+                    })
                 }
             }).catch((err) => {
                 alert(err)
@@ -46,7 +46,7 @@ export const startLoginUser = (formLogin, props, setIsLogin) => {
                 } else {
                     localStorage.setItem('token', res.data.token)
                     props.history.push('/DashBoard')
-                     setIsLogin(true)
+                    setIsLogin(true)
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -72,23 +72,23 @@ export const startAddBudget = (formdata, reset) => {
     return (dispatch) => {
         (
             async () => {
-               try {
-                const result = await axios.put('/user/budget', formdata, { headers: { 'authorization': localStorage.getItem('token') } })
-                if (result) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'BUDGET ADDED',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                    dispatch(setAddBudget(result.data))
-                    reset()
+                try {
+                    const result = await axios.put('/user/budget', formdata, { headers: { 'authorization': localStorage.getItem('token') } })
+                    if (result) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'BUDGET ADDED',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        dispatch(setAddBudget(result.data))
+                        reset()
+                    }
+                } catch (error) {
+                    alert(error)
                 }
-               } catch (error) {
-                alert(error)
-               }
-               
+
             }
         )()
     }

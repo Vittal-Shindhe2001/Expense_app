@@ -122,7 +122,6 @@ export const startUserDelete = (data, props, setIsLogin) => {
             async () => {
                 try {
                     const res = await axios.post('/user/account', data, { headers: { 'authorization': localStorage.getItem('token') } })
-                    console.log(res.data);
                     if (res.data.hasOwnProperty('error')) {
                         alert(res.data.error)
                     }

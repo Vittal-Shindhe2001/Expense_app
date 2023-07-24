@@ -8,6 +8,7 @@ import Setting from "./Settings"
 import Account from "./Account"
 import PageNotFound from "./PageNotFound"
 import PrivateRoute from "./helper_Function/PrivateRoute"
+import About from "./About"
 const Navbar = (props) => {
     const [isLogin, setIsLogin] = useState(false)
     useEffect(() => {
@@ -38,7 +39,7 @@ const Navbar = (props) => {
                                 <Link className="nav-link" to='/setting'>Setting</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to='*'></Link>
+                                <Link className="nav-link" to='/about'>About</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to='/' onClick={() => {
@@ -98,6 +99,7 @@ const Navbar = (props) => {
             <PrivateRoute path="/dashBoard" component={DashBoard} />
             <PrivateRoute path="/setting" component={Setting} />
             <PrivateRoute path="/account" component={Account} />
+            <PrivateRoute path="/about" component={About} />
         </div>
     )
 }

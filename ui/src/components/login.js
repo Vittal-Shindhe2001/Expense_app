@@ -19,7 +19,7 @@ function Login(props) {
     //form validation
     const formvalidation = () => {
         if (email.trim().length === 0) {
-            error.email = 'Enter Your Email'
+            error.email = 'Please Enter Your Email'
         }
 
         if (password.trim().length === 0) {
@@ -27,7 +27,7 @@ function Login(props) {
         } 
     }
     const handleSubmit = (e) => {
-        setMessageError({})
+        // setMessageError({})
         e.preventDefault()
         formvalidation()
         const formLogin = {

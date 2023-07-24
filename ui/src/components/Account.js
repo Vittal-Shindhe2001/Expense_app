@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import PiChart from "./helper_Function/PieChart"
 import { useDispatch, useSelector } from "react-redux"
 import { startGetExpense } from "../actions/expenseAction"
@@ -16,12 +16,18 @@ const Account = (props) => {
     const expense = useSelector(state => {
         return state.expense.data
     })
+    console.log(expense);
     const user = useSelector(state => {
         return state.user.data
     })
-    const result = expense.reduce((iv, cv) => {
-        return iv + cv.amount
-    }, 0)
+    
+        const result = useMemo(()=>{
+          return  expense.reduce((iv, cv) => {
+                return iv + cv.amount
+            }, 0)
+        },[expense])
+    
+    
     
 
     const handleDeleteAccount = (e) => {

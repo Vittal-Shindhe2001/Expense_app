@@ -1,4 +1,4 @@
-import { ADD_EXPENSE, DELETE_AllEXPENSE, DELETE_EXPENSE, GET_EXPENSE, GET_ISDELETED, UNDO_EXPENSE,EDIT_EXPENSE } from "../actions/expenseAction"
+import { ADD_EXPENSE, DELETE_AllEXPENSE, DELETE_EXPENSE, GET_EXPENSE, GET_ISDELETED, UNDO_EXPENSE, EDIT_EXPENSE } from "../actions/expenseAction"
 
 const initialExpense = { error: '', data: [] }
 

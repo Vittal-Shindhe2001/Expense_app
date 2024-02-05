@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { startAddCategories, startGetCategory } from "../actions/category"
 import { startGetExpense, startDeleteExpense } from "../actions/expenseAction"
 import { Modal, ModalHeader, ModalBody } from 'reactstrap'
+
 const DashBoard = (props) => {
     const [category, setCategory] = useState('')
     const [modal, setModal] = useState(false)
@@ -11,8 +12,10 @@ const DashBoard = (props) => {
     const [edit, setEdit] = useState({})
     const [messageError, setMessageError] = useState({})
     const err = {}
+    //search State
+    const [search, setSearch] = useState('')
     const dispacth = useDispatch()
-   
+
     useEffect(() => {
         //Get Expense
         dispacth(startGetExpense())
@@ -23,10 +26,9 @@ const DashBoard = (props) => {
         setCategory(e.target.value)
     }
     //expense
-     const expense = useSelector((state) => {
+    const expense = useSelector((state) => {
         return state.expense.data
     })
-
     //Category Adding validation
     const validation = () => {
         if (category.length === 0) {
@@ -44,10 +46,10 @@ const DashBoard = (props) => {
         const reset = () => {
             setCategory('')
         }
-        if (Object.keys(err).length===0) {
-            
+        if (Object.keys(err).length === 0) {
+
             dispacth(startAddCategories(categoryData, reset))
-        }else{
+        } else {
             setMessageError(err)
         }
     }
@@ -56,7 +58,7 @@ const DashBoard = (props) => {
         return state.category.data
     })
     const findCategoryOnId = (id) => {
-        if (allCategory.length>0) {
+        if (allCategory.length > 0) {
             const res = allCategory.find(ele => { return ele._id === id }).name
             return res
         }
@@ -77,45 +79,50 @@ const DashBoard = (props) => {
                     <form onSubmit={handleClick}>
                         <div className="form-group">
                             <label ><span style={{ color: "rgb(64, 65, 0)", font: 'bold' }}>A</span>dd Category</label>
-                            <input type="text" className="form-control" value={category} placeholder="Enter Category Name" style={{ width: 200, borderColor: "black" }} onChange={handleChange}  />{messageError.category && <div><span style={{color:"red"}}>{messageError.category}</span><br/></div>} 
+                            <input type="text" className="form-control" value={category} placeholder="Enter Category Name" style={{ width: 200, borderColor: "black" }} onChange={handleChange} />{messageError.category && <div><span style={{ color: "red" }}>{messageError.category}</span><br /></div>}
                             <input type="submit" className="btn btn-primary" value='Add' style={{ backgroundColor: "green" }} />
                         </div>
                     </form>
-                    {expense.length !== 0 ? <table className="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
+                    {expense.length !== 0 ? <div>
+                        <form className="search-form-container">
+                            <label className="search-label">Search</label>
+                            <input type="text" className="search-input" value={search} placeholder="Enter Category Name" onChange={(e) => { setSearch(e.target.value) }} />
+                        </form>
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Edit</th>
+                                    <th scope="col">Delete</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                            {
-                                expense.map((ele, i) => {
-                                    return (
-                                        <tr key={i}>
-                                            <td >{i + 1}</td>
-                                            <td >{ele.note}</td>
-                                            <td >{expense && findCategoryOnId(ele.categoryId)}</td>
-                                            <td >{ele.date.split('T')[0]}</td>
-                                            <td >{ele.amount}</td>
-                                            <td ><button class="btn btn-primary" onClick={() => { handleEdit(ele) }}>edit</button></td>
-                                            <td ><button class="btn btn-danger" onClick={() => { handleDeleteExpense(ele._id) }}>*</button></td>
+                                {expense.filter(ele => findCategoryOnId(ele.categoryId)
+                                    .toLowerCase().includes(search.toLocaleLowerCase())).map((ele, i) => {
+                                        return (
+                                            <tr key={i}>
+                                                <td >{i + 1}</td>
+                                                <td >{ele.note}</td>
+                                                <td >{expense && findCategoryOnId(ele.categoryId)}</td>
+                                                <td >{ele.date.split('T')[0]}</td>
+                                                <td >{ele.amount}</td>
+                                                <td ><button className="btn btn-primary" onClick={() => { handleEdit(ele) }}>edit</button></td>
+                                                <td ><button className="btn btn-danger" onClick={() => { handleDeleteExpense(ele._id) }}>*</button></td>
 
-                                        </tr>
+                                            </tr>
 
-                                    )
-                                })
-                            }
+                                        )
+                                    })
+                                }
 
-                        </tbody>
-                    </table> : <h2><span style={{ color: 'rgb(195, 65, 0)' }}>N</span>o Expense Found</h2>}
+                            </tbody>
+                        </table> </div> : <h2><span style={{ color: 'rgb(195, 65, 0)' }}>N</span>o Expense Found</h2>}
                 </div>
                 <div className="col-md-4" style={{}}>
                     <center>

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const Category = require('../models/category_Model')
 const Expense = require('../models/expensive_Model')
 
-const { json } = require('express')
+
 require('dotenv').config()
 const userController = {}
 

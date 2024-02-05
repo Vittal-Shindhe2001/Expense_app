@@ -13,6 +13,7 @@ export default function Form(props) {
     const categories = useSelector((state) => {
         return state.category.data
     })
+   
     useEffect(() => {
         dispacth(startGetCategory())
         dispacth(startGetExpense())
@@ -84,7 +85,7 @@ export default function Form(props) {
                 <select className="form-control " aria-label="Example select with button addon" value={id} style={{ borderColor: "black", width: 300 }} onChange={(e) => { setId(e.target.value) }} required>
                     <option >Select Category</option>
                     {
-                        categories.map((ele, i) => {
+                      categories && categories.map((ele, i) => {
                             return (
                                 <option key={i} value={ele._id}>{ele.name}</option>
                             )

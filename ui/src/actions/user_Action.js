@@ -33,11 +33,12 @@ export const startPostUsers = (formSubmit, props) => {
     }
 
 }
-export const startLoginUser = (formLogin, props, setIsLogin) => {
+export const startLoginUser = (formLogin, props, setIsLogin,setIsSubmitting) => {
     return () => {
         axios.post('/user/login', formLogin)
             .then((res) => {
                 if (res.data.hasOwnProperty('error')) {
+                    setIsSubmitting(false)
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -46,6 +47,7 @@ export const startLoginUser = (formLogin, props, setIsLogin) => {
                 } else {
                     localStorage.setItem('token', res.data.token)
                     props.history.push('/DashBoard')
+                    setIsSubmitting(false)
                     setIsLogin(true)
                     Swal.fire({
                         position: 'center',
